@@ -19,8 +19,10 @@ import { useCreateBorrowedBookMutation, useGetBookQuery } from "@/state/api";
 import { toast, Toaster } from "sonner";
 import { LoadingSkeleton } from "@/components/loading";
 import { AlertCircleIcon, CheckCircle2Icon } from "lucide-react";
+import { useNavigate } from "react-router";
 
-export default function CreatePartner() {
+export default function CreateBorrowedBook() {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const { data, isLoading } = useGetBookQuery({ page: currentPage });
@@ -67,17 +69,7 @@ export default function CreatePartner() {
         return;
       }
 
-      setSuccess("Borrower berhasil didaftarkan");
-      setFormData({
-        card_number: "",
-        name: "",
-        email: "",
-        duration: "",
-        book: -1,
-        active_loan: true,
-      });
-      setCurrentPage(1);
-
+      navigate(0);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error("Opps somthing went wrong", {

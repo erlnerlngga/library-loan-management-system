@@ -1,16 +1,16 @@
 import { Routes, Route } from "react-router";
 
 import Layout from "./components/layout/layout";
-import CreatePartner from "./pages/admin/CreatePatner";
+import CreateBorrowedBook from "./pages/CreateBorrowedBook";
 
-import Partners from "./pages/admin/Patners";
+import BorrowedBooks from "./pages/BorrowedBooks";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<CreatePartner />} />
-        <Route path="record" element={<Partners />} />
+        <Route index element={<CreateBorrowedBook />} />
+        <Route path="record" element={<BorrowedBooks />} />
       </Route>
     </Routes>
   );

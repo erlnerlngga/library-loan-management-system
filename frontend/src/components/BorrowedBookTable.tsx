@@ -15,8 +15,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal, Edit } from "lucide-react";
-import { Link, useNavigate } from "react-router";
+import { MoreHorizontal } from "lucide-react";
+import { useNavigate } from "react-router";
 import { useEditBookBorrowedMutation, useEditBookMutation } from "@/state/api";
 
 interface BorrowedBookProps {
@@ -154,12 +154,6 @@ export default function BorrowedBookTable({
                         >
                           Book return
                         </Button>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem asChild>
-                        <Link to={`/`}>
-                          <Edit className="mr-2 h-4 w-4" />
-                          Edit
-                        </Link>
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>

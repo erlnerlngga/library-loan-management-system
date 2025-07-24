@@ -14,7 +14,7 @@ import { useGetBorrowedBookQuery } from "@/state/api";
 import { LoadingSkeleton } from "@/components/loading";
 import BorrowedBookTable from "@/components/BorrowedBookTable";
 
-export default function Partners() {
+export default function BorrowedBooks() {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const { data, isLoading } = useGetBorrowedBookQuery({
