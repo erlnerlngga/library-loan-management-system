@@ -34,4 +34,6 @@ urlpatterns = [
         name='api-docs',
     ),
     path('api/v1/user/', include('user.urls')),
+    path('api/v1/book/', include('book.urls')),
+    path('api/v1/borrow/', include('borrow.urls')),
 ]

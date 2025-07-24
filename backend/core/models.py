@@ -1,17 +1,12 @@
 """
 DATABASE MODELS
 """
-from django.conf import settings
+
 from django.db import models
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
     PermissionsMixin,
-)
-
-ROLE_CHOICES = (
-        ("admin", "Admin"),
-        ("user", "User"),
 )
 
 
@@ -37,17 +32,6 @@ class UserManager(BaseUserManager):
 
         return user
 
-class Role(models.Model):
-    """Role in the system."""
-    name = models.CharField(max_length=255, choices=ROLE_CHOICES, default="user")
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-    )
-
-    def __str__(self):
-        return self.name
-
 class User(AbstractBaseUser, PermissionsMixin):
     """User in the system."""
     name = models.CharField(max_length=255)
@@ -55,13 +39,47 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
-    roles = models.ManyToManyField(
-        Role, related_name="users", blank=True
-    )
-
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+
+class Book(models.Model):
+    """Book in the system"""
+    title = models.CharField(max_length=255)
+    isbn = models.CharField(max_length=255, unique=True)
+    stock = models.IntegerField(default=0)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class Borrower(models.Model):
+    """Borrower in the system"""
+    card_number = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+class BookBorrowed(models.Model):
+    """Book Borrowed in the system"""
+    borrower = models.ForeignKey(
+        Borrower,
+        on_delete=models.CASCADE,
+        null=True,
+    )
+
+    book = models.ForeignKey(
+        Book,
+        on_delete=models.CASCADE,
+    )
+
+    duration = models.DateField()
+    active_loan = models.BooleanField(default=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
