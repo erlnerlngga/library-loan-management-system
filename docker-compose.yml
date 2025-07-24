@@ -8,15 +8,29 @@ services:
       - ./backend:/backend
     command: >
       sh -c "python manage.py migrate &&
+             python manage.py seed_book &&
              python manage.py runserver 0.0.0.0:8000"
     environment:
       - DB_HOST=db
       - DB_NAME=db
       - DB_USER=user
       - DB_PASS=localdevpw
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
     depends_on:
       db:
         condition: service_healthy
+
+  frontend: # <-- New service starts here
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - 3000:5173
+    volumes:
+      - ./frontend:/frontend
+      - /frontend/node_modules # Prevents local node_modules from overwriting container's
+    depends_on:
+      - backend
 
   db:
     image: postgres:17.1

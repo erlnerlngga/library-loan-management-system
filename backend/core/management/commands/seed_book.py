@@ -11,7 +11,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         """Entrypoint for command."""
-        json_file_path = os.path.join(os.path.dirname(__file__), '../../../../dummy_books.json')
+        json_file_path = os.path.join(os.path.dirname(__file__), '../../../dummy_books.json')
 
         if not os.path.exists(json_file_path):
             self.stdout.write(self.style.ERROR(f"Error: JSON file not found at {json_file_path}"))
