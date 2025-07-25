@@ -1,7 +1,7 @@
 # library-loan-management-system
 
 - link: https://library-loan-management-system.vercel.app/
-- api: http://103.74.5.105:8000/api/v1/docs/
+- api: https://app.refmeapp.com/api/v1/docs/
 
 ##### Backend
 
