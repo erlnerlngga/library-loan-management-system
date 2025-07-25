@@ -16,7 +16,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
-import { useNavigate } from "react-router";
 import { useEditBookBorrowedMutation, useEditBookMutation } from "@/state/api";
 
 interface BorrowedBookProps {
@@ -46,8 +45,6 @@ interface BorrowedBookProps {
 export default function BorrowedBookTable({
   borrowed_books,
 }: BorrowedBookProps) {
-  const navigate = useNavigate();
-
   const [editBook] = useEditBookMutation();
   const [editBorrowebBook] = useEditBookBorrowedMutation();
 
@@ -94,8 +91,6 @@ export default function BorrowedBookTable({
     });
 
     await Promise.all([updateBook, updateBorrowedBook]);
-
-    navigate(0);
   };
 
   return (

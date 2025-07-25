@@ -1,21 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// import Cookies from "js-cookie";
-import { Partner } from "@/types/patner/patner";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_BASE_URL_PROD,
-    // prepareHeaders: async (headers) => {
-    //   const token = Cookies.get("token");
-    //   if (token) {
-    //     headers.set("Authorization", `Token ${token}`);
-    //   }
-    //   return headers;
-    // },
   }),
   reducerPath: "api",
-  tagTypes: ["users"],
+  tagTypes: ["Book"],
   endpoints: (build) => ({
     createBorrowedBook: build.mutation<
       {
@@ -58,7 +49,6 @@ export const api = createApi({
       ) => {
         try {
           const endpoint = `/borrow/book/`;
-          console.log({ book_borrowed });
 
           const result = await fetchWithBQ({
             url: endpoint,
@@ -97,6 +87,7 @@ export const api = createApi({
           return { error: error || "Something went wrong!" };
         }
       },
+      invalidatesTags: ["Book"],
     }),
     editBookBorrowed: build.mutation<
       {
@@ -172,25 +163,7 @@ export const api = createApi({
           return { error: error || "Could not fetch campaign data" };
         }
       },
-    }),
-    getBorrowedBookById: build.query<
-      Partner,
-      {
-        id: string;
-      }
-    >({
-      queryFn: async ({ id }, _queryApi, _extraoptions, fetchWithBQ) => {
-        try {
-          const endpoint = `/partner/${id}/`;
-
-          const partnerRes = await fetchWithBQ(endpoint);
-          // console.log({ userDetailsResponse });
-
-          return { data: partnerRes.data as Partner };
-        } catch (error: any) {
-          return { error: error.message || "Could not fetch hazard  data" };
-        }
-      },
+      invalidatesTags: ["Book"],
     }),
     getBorrowedBook: build.query<
       {
@@ -256,6 +229,7 @@ export const api = createApi({
           return { error: error.message || "Could not fetch partner  data" };
         }
       },
+      providesTags: ["Book"],
     }),
     getBook: build.query<
       {
@@ -295,6 +269,7 @@ export const api = createApi({
           return { error: error.message || "Could not fetch partner  data" };
         }
       },
+      providesTags: ["Book"],
     }),
     editBook: build.mutation<
       {
@@ -334,6 +309,7 @@ export const api = createApi({
           return { error: error || "Could not update book" };
         }
       },
+      invalidatesTags: ["Book"],
     }),
   }),
 });
@@ -342,7 +318,6 @@ export const {
   useCreateBorrowedBookMutation,
   useEditBookBorrowedMutation,
   useGetBorrowedBookQuery,
-  useGetBorrowedBookByIdQuery,
   useGetBookQuery,
   useEditBookMutation,
 } = api;
