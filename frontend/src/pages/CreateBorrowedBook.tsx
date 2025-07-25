@@ -67,6 +67,19 @@ export default function CreateBorrowedBook() {
         return;
       }
 
+      setFormData({
+        card_number: "",
+        name: "",
+        email: "",
+        duration: "",
+        book: -1,
+        active_loan: true,
+      });
+
+      toast.success("Save it !!", {
+        description: "Thank u have a nice day.",
+      });
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error("Opps somthing went wrong", {
